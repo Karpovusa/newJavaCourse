@@ -14,7 +14,7 @@ public class ApplicationManager {
     private ContactHelper contactHelper;
 
     public void init() {
-        wd = new FirefoxDriver;
+        wd = new FirefoxDriver();
         wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         wd.get("http://192.168.0.2/addressbook/");
         groupHelper = new GroupHelper(wd);
