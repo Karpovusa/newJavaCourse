@@ -7,12 +7,14 @@ public class ContactData {
     private String nickname;
     private String company;
     private String mobile;
+    private String group;
 
 
-    public ContactData(String firstname, String lastname, String email) {
-        this.setFirstname(firstname);
-        this.setLastname(lastname);
-        this.setEmail(email);
+    public ContactData(String firstname, String lastname, String email, String group) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.group = group;
     }
 
     public String getFirstname() {
@@ -26,6 +28,8 @@ public class ContactData {
     public String getEmail() {
         return email;
     }
+
+    public String getGroup() {return group;}
 
     public String getNickname() {
         return nickname;
@@ -62,4 +66,6 @@ public class ContactData {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
 }
