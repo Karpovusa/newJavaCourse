@@ -6,10 +6,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-
+import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -43,23 +45,41 @@ public class ContactHelper extends HelperBase {
         click(By.linkText("home page"));
     }
 
-    public void initContactModification() {
-        //click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
-        click(By.cssSelector("#maintable tr:last-child img[title='Edit']"));
-    }
-
     public void submitContactModification() {
         click(By.name("update"));
     }
 
-    public void selectContacts(int index) {
-        {
-            click(By.cssSelector("#maintable tr:last-child input[id='"+index+"']"));
+  private void selectContactsById(int id) {
+    wd.findElement(By.cssSelector("#maintable tr input[id='"+id+"']")).click();
+  }
+  public void modify(ContactData contact) {
+    initContactModificationById(contact.getId());
+    fillContactForm(contact, false);
+    submitContactModification();
+    contactCache=null;
+    returnToHomepage();
+  }
 
-        }
-    }
+  private void initContactModificationById(int id) {
+    click(By.cssSelector("#maintable tr a[href='edit.php?id="+id+"'] img"));
+  }
 
-    public void deleteSelectedContacts() {
+  public void delete(ContactData contact) {
+    selectContactsById(contact.getId());
+    deleteSelectedContacts();
+    contactCache=null;
+    submitContactsDeletion();
+  }
+
+  public void create(ContactData contactData) {
+    initContactCreation();
+    fillContactForm(contactData, true);
+    submitContactCreation();
+    contactCache=null;
+    returnToHomepage();
+  }
+
+  public void deleteSelectedContacts() {
         click(By.xpath("//div[@id='content']/form[2]/div[2]/input"));
     }
 
@@ -67,29 +87,26 @@ public class ContactHelper extends HelperBase {
         acceptDialogueWindow();
     }
 
-    public void createContact(ContactData contactData) {
-        initContactCreation();
-        fillContactForm(contactData, true);
-        submitContactCreation();
-        returnToHomepage();
-    }
 
-    public boolean isThereAContact() {
-        return isElementPresent(By.name("selected[]"));
-    }
+  private Contacts contactCache=null;
 
-    public List<ContactData> getContactList() {
-        List<ContactData> contacts = new ArrayList<>();
+    public Contacts all() {
+      if(contactCache!=null) return new Contacts(contactCache);
+
+        contactCache = new Contacts();
         List<WebElement> elements = wd.findElements(By.cssSelector("tr[name=entry]"));
         for (WebElement element : elements) {
             String lastname = element.findElement(By.cssSelector("td:nth-child(2)")).getText();
             String firstname = element.findElement(By.cssSelector("td:nth-child(3)")).getText();
             String email = element.findElement(By.cssSelector("td:nth-child(5)")).getText();
             int id = Integer.parseInt(element.findElement(By.cssSelector("td input")).getAttribute("id"));
-            ContactData contact = new ContactData(id,firstname,lastname,email,null);
-            contacts.add(contact);
+            ContactData contact = new ContactData().withId(id).withFirstname(firstname).withLastname(lastname).withEmail(email);
+            contactCache.add(contact);
 
         }
-    return contacts;
+    return new Contacts(contactCache);
     }
+
+
+
 }
