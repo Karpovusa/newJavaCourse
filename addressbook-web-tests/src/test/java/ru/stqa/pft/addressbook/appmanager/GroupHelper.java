@@ -8,6 +8,7 @@ import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.List;
 
+
 public class GroupHelper extends HelperBase {
 
 
@@ -86,7 +87,7 @@ public class GroupHelper extends HelperBase {
   }
 
 
-  public int getGroupCount() {
+  public int count() {
     return wd.findElements(By.className("group")).size();
   }
 

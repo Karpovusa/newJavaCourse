@@ -23,7 +23,9 @@ public class ApplicationManager {
     }
 
     public void init() {
-        if(browser.equals(BrowserType.CHROME))wd=new ChromeDriver();
+        if(browser.equals(BrowserType.CHROME))
+        {//System.setProperty("webdriver.chrome.driver", "C:\\Users\\kseliumi\\IdeaProjects\\SKSES tests\\src\\main\\resources\\drivers\\chromedriver.exe");
+        wd=new ChromeDriver();}
         else if (browser.equals(BrowserType.FIREFOX) ) wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
         else if (browser.equals(BrowserType.IE))wd = new InternetExplorerDriver();
 
