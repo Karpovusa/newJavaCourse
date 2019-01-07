@@ -1,0 +1,12 @@
+[
+  {
+    "name": "GroupName0",
+    "header": "Header0",
+    "footer": "Footer0"
+  },
+  {
+    "name": "GroupName1",
+    "header": "Header1",
+    "footer": "Footer1"
+  }
+]

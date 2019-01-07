@@ -10,6 +10,8 @@ import static org.hamcrest.junit.MatcherAssert.assertThat;
 
 
 public class GroupModificationTests extends TestBase {
+
+
   @BeforeMethod
   public void ensurePreconditions() {
     app.goTo().groupPage();

@@ -8,6 +8,7 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -31,10 +32,18 @@ public class ContactHelper extends HelperBase {
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
+        attach(By.name("photo"),contactData.getPhoto());
 
     }
 
-    public void submitContactCreation() {
+  private void attach(By locator, File photo) {
+    if (photo != null) {
+        wd.findElement(locator).sendKeys(photo.getAbsolutePath());
+    }
+
+  }
+
+  public void submitContactCreation() {
         click(By.name("submit"));
     }
 

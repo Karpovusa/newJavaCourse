@@ -1,0 +1,26 @@
+<list>
+  <ru.stqa.pft.addressbook.model.GroupData>
+    <name>Name0</name>
+    <header>Header0</header>
+    <footer>Footer0</footer>
+    <id>2147483647</id>
+  </ru.stqa.pft.addressbook.model.GroupData>
+  <ru.stqa.pft.addressbook.model.GroupData>
+    <name>Name1</name>
+    <header>Header1</header>
+    <footer>Footer1</footer>
+    <id>2147483647</id>
+  </ru.stqa.pft.addressbook.model.GroupData>
+  <ru.stqa.pft.addressbook.model.GroupData>
+    <name>Name2</name>
+    <header>Header2</header>
+    <footer>Footer2</footer>
+    <id>2147483647</id>
+  </ru.stqa.pft.addressbook.model.GroupData>
+  <ru.stqa.pft.addressbook.model.GroupData>
+    <name>Name3</name>
+    <header>Header3</header>
+    <footer>Footer3</footer>
+    <id>2147483647</id>
+  </ru.stqa.pft.addressbook.model.GroupData>
+</list>
