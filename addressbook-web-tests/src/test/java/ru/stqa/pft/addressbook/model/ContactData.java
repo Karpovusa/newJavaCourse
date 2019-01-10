@@ -1,38 +1,63 @@
 package ru.stqa.pft.addressbook.model;
 
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
-
+@Entity
+@Table(name="addressbook")
 public class ContactData {
   @Expose
+  @Column
   private String firstname;
   @Expose
+  @Column
   private String lastname;
   @Expose
+  @Type(type="text")
   private String email;
+  @Type(type="text")
   private String email2;
+  @Type(type="text")
   private String email3;
+  @Transient
   private String nickname;
+
   private String company;
+  @Column
+  @Type(type="text")
   private String mobile;
-  private String homePhone;
+  @Column
+  @Type(type="text")
+  private String home;
+  @Column
+  @Type(type="text")
   private String work;
   @Expose
+  @Transient
   private String group;
+  @Id
+  @Column
   private int id = Integer.MAX_VALUE;
+  @Transient
   private String allPhones;
 
   public File getPhoto() {
-    return photo;
+    if(photo==null){
+      return null;
+    }
+    return new File(photo);
+
   }
 
   public ContactData withPhoto(File photo) {
-    this.photo = photo;
+    this.photo = photo.getPath();
     return this;
   }
-  private File photo;
+  @Column(name="photo")
+  @Type(type="text")
+  private String photo;
 
   public String getAddress() {
     return address;
@@ -42,7 +67,7 @@ public class ContactData {
     this.address = address;
     return this;
   }
-
+  @Transient
   private String address;
 
   public void setAllEmails(String allEmails) {
@@ -57,7 +82,7 @@ public class ContactData {
     this.allEmails = allEmails;
     return this;
   }
-
+  @Transient
   private String allEmails;
 
   public String getAllPhones() {
@@ -103,8 +128,8 @@ public class ContactData {
     return id;
   }
 
-  public String getHomePhone() {
-    return homePhone;
+  public String getHome() {
+    return home;
   }
 
   public String getWorkPhone() {
@@ -131,7 +156,7 @@ public class ContactData {
 
 
   public ContactData withHomePhone(String homePhone) {
-    this.homePhone = homePhone;
+    this.home = homePhone;
     return this;
   }
 

@@ -24,7 +24,7 @@ public class ContactCheckTests extends TestBase {
     }
 
     private String mergePhones(ContactData contact) {
-        return Arrays.asList(contact.getHomePhone(),contact.getMobile(),contact.getWorkPhone())
+        return Arrays.asList(contact.getHome(),contact.getMobile(),contact.getWorkPhone())
                 .stream().filter(s->!s.equals(""))
                 .map(ContactCheckTests::cleaned)
                 .collect(Collectors.joining("\n"));
