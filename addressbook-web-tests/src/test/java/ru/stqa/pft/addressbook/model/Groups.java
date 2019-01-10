@@ -2,8 +2,8 @@ package ru.stqa.pft.addressbook.model;
 
 import com.google.common.collect.ForwardingSet;
 
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 
@@ -18,7 +18,8 @@ public class Groups extends ForwardingSet<GroupData> {
   public Groups(Groups groups){
     this.delegate=new HashSet<>(groups.delegate);
   }
-  public Groups (List groups){
+
+  public Groups (Collection groups){
     this.delegate=new HashSet<>(groups);
   }
   public Groups(){

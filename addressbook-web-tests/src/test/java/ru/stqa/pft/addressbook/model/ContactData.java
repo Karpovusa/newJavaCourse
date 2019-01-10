@@ -5,6 +5,9 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name="addressbook")
 public class ContactData {
@@ -23,26 +26,32 @@ public class ContactData {
   private String email3;
   @Transient
   private String nickname;
-
+  @Transient
   private String company;
+  @Expose
   @Column
   @Type(type="text")
   private String mobile;
+  @Expose
   @Column
   @Type(type="text")
   private String home;
+  @Expose
   @Column
   @Type(type="text")
   private String work;
-  @Expose
+ /* @Expose
   @Transient
   private String group;
+  */
+ @ManyToMany(fetch=FetchType.EAGER)
+ @JoinTable(name="address_in_groups", joinColumns = @JoinColumn( name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+ private Set<GroupData> groups = new HashSet<>();
   @Id
   @Column
   private int id = Integer.MAX_VALUE;
   @Transient
   private String allPhones;
-
   public File getPhoto() {
     if(photo==null){
       return null;
@@ -67,7 +76,8 @@ public class ContactData {
     this.address = address;
     return this;
   }
-  @Transient
+  //@Transient
+  @Type(type="text")
   private String address;
 
   public void setAllEmails(String allEmails) {
@@ -107,11 +117,11 @@ public class ContactData {
   public String getEmail() {
     return email;
   }
-
+/*
   public String getGroup() {
     return group;
   }
-
+*/
   public String getNickname() {
     return nickname;
   }
@@ -181,11 +191,16 @@ public class ContactData {
     return this;
   }
 
-  public ContactData withGroup(String group) {
-    this.group = group;
-    return this;
+  public Groups getGroups() {
+    return new Groups(groups);
   }
 
+  /*
+    public ContactData withGroup(String group) {
+      this.group = group;
+      return this;
+    }
+  */
   public ContactData withMobile(String mobile) {
     this.mobile = mobile;
     return this;
@@ -235,5 +250,11 @@ public class ContactData {
     result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
     result = 31 * result + id;
     return result;
+  }
+
+  public ContactData inGroup(GroupData group) {
+    groups.add(group);
+    return this;
+
   }
 }

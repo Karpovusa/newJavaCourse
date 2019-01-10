@@ -1,14 +1,20 @@
 [
   {
-    "firstname": "Vasya0",
+    "firstname": "Evgeny0",
     "lastname": "Vasin0",
     "email": "vasyan@gmail.com",
+    "mobile": "335556660",
+    "home": "123450",
+    "work": "12345677890",
     "group": "kirpichi"
   },
   {
-    "firstname": "Vasya1",
+    "firstname": "Evgeny1",
     "lastname": "Vasin1",
     "email": "vasyan@gmail.com",
+    "mobile": "335556661",
+    "home": "123451",
+    "work": "12345677891",
     "group": "kirpichi"
   }
 ]

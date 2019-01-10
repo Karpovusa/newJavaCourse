@@ -18,7 +18,7 @@ public class ContactModificationTests extends TestBase {
     //check if no create exists
     //if (app.contact().all().size()==0)
     if(app.db().contacts().size()==0)
-      app.contact().create(new ContactData().withFirstname("Gena3").withLastname("HiberPomog").withEmail1("gena@gmail.com").withGroup("someGroup").withPhoto(new File("src/test/resources/image.jpg")));
+      app.contact().create(new ContactData().withFirstname("Gena3").withLastname("HiberPomog").withEmail1("gena@gmail.com")/*.withGroup("someGroup")*/.withPhoto(new File("src/test/resources/image.jpg")));
 
   }
 
@@ -33,6 +33,9 @@ public class ContactModificationTests extends TestBase {
     assertThat(app.contact().count(),equalTo(before.size()));
     Contacts after = app.db().contacts();
     assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
+    verifyContactListInUI();
+
+
 
 
   }

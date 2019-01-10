@@ -3,12 +3,17 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.tests.ContactCheckTests;
 
 import java.io.File;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+
 
 public class ContactHelper extends HelperBase {
 
@@ -22,9 +27,19 @@ public class ContactHelper extends HelperBase {
         type(By.name("firstname"), contactData.getFirstname());
         type(By.name("lastname"), contactData.getLastname());
         type(By.name("email"), contactData.getEmail());
-        if (creation&&contactData.getGroup()!=null) {
-            select(By.name("new_group"),contactData.getGroup());
-        } else {
+        if(contactData.getHome()!=null)
+        type(By.name("home"), contactData.getHome());
+        if(contactData.getHome()!=null)
+        type(By.name("mobile"), contactData.getMobile());
+        if(contactData.getHome()!=null)
+        type(By.name("work"), contactData.getWorkPhone());
+       if (creation){
+           if(contactData.getGroups().size()>0) {
+               Assert.assertTrue(contactData.getGroups().size()==1);
+            select(By.name("new_group"),contactData.getGroups().iterator().next().getName());
+           }
+
+       } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
         attach(By.name("photo"),contactData.getPhoto());
@@ -154,5 +169,51 @@ public class ContactHelper extends HelperBase {
                 .withEmail3(email3);
 
     }
+    public String mergePhones(ContactData contact) {
+        return Arrays.asList(contact.getHome(),contact.getMobile(),contact.getWorkPhone())
+                .stream().filter(s->!s.equals(""))
+                .map(ContactCheckTests::cleaned)
+                .collect(Collectors.joining("\n"));
+    }
+    public String mergeEmails(ContactData contact) {
+        return Arrays.asList(contact.getEmail(),contact.getEmail2(),contact.getEmail3())
+                .stream().filter(s->!s.equals(""))
+                .collect(Collectors.joining("\n"));
+    }
 
+
+    public void selectGroup(GroupData group) {
+       // select(By.xpath(String.format("//option[text() = \"%s\"]",group.getName())),null);
+        WebElement selectElem = wd.findElement(By.xpath("//select[@name='to_group']"));
+        Select select = new Select(selectElem);
+        select.selectByValue(String.valueOf(group.getId()));
+
+
+    }
+    public  void addToGroup(ContactData contact, GroupData group) {
+        checkContact(contact);
+       selectGroup(group);
+        click(By.cssSelector("input[value='Add to']"));
+
+    }
+
+    public void checkContact(ContactData contact){
+
+        click(By.cssSelector(String.format("input[type='checkbox'][id='%s']",contact.getId())));
+
+    }
+
+    public void filterByGroup(GroupData group) {
+        WebElement selectElem = wd.findElement(By.xpath("//select[@name='group']"));
+        Select select = new Select(selectElem);
+        select.selectByValue(String.valueOf(group.getId()));
+
+    }
+
+    public void deleteContactFromGroup(ContactData contact, GroupData group) {
+        filterByGroup(group);
+        click(By.cssSelector(String.format("input[id='%s']",contact.getId())));
+        click(By.cssSelector("input[name='remove']"));
+
+    }
 }

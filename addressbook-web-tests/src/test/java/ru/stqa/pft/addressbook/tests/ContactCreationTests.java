@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -41,13 +42,17 @@ public class ContactCreationTests extends TestBase {
 
     @Test(dataProvider="validContactsFromJson")
     public void testContactCreation(ContactData contact) {
+        Groups groups = app.db().groups();
+        contact.inGroup(groups.iterator().next());
       Contacts before = app.db().contacts();
+
       app.contact().create(contact);
       app.goTo().HomePage();
 
       assertThat(app.contact().count(),equalTo(before.size()+1));
       Contacts after = app.db().contacts();
       assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt(g->g.getId()).max().getAsInt()))));
+        verifyContactListInUI();
 
 
     }
