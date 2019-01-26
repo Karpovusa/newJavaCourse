@@ -24,6 +24,7 @@ public class ApplicationManager {
   private  AuthHelper auth;
   private DBhelper dBhelper;
   private NavigationHelper navigationHelper;
+  private SoapHelper soapHelper;
 
 
   public ApplicationManager(String browser) {
@@ -100,6 +101,12 @@ public class ApplicationManager {
       navigationHelper= new NavigationHelper(this);
     }
     return navigationHelper;
+  }
+  public SoapHelper soap(){
+    if (soapHelper==null){
+      soapHelper= new SoapHelper(this);
+    }
+    return soapHelper;
   }
 
 }
