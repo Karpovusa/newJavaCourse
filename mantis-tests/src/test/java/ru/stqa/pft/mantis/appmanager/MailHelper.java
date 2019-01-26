@@ -1,14 +1,12 @@
 package ru.stqa.pft.mantis.appmanager;
 
 import org.subethamail.wiser.Wiser;
-import org.subethamail.smtp.*;
 import org.subethamail.wiser.WiserMessage;
 import ru.stqa.pft.mantis.model.MailMessage;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
-import java.io.InterruptedIOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,7 +41,7 @@ public class MailHelper {
   public static MailMessage toModelMail(WiserMessage m) {
     try {
       MimeMessage mm = m.getMimeMessage();
-      return new MailMessage(mm.getAllRecipients()[0].toString(),(String) mm.getContent());
+      return new MailMessage(mm.getAllRecipients()[0].toString(),(String) mm.getContent(),mm.getSentDate());
     }catch (MessagingException | IOException e){
       e.printStackTrace();
       return null;

@@ -7,6 +7,7 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
 
+import javax.print.attribute.standard.MediaSize;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -20,6 +21,9 @@ public class ApplicationManager {
   private RegistrationHelper registrationHelper;
   private FTPHelper ftp;
   private MailHelper mailHelper;
+  private  AuthHelper auth;
+  private DBhelper dBhelper;
+  private NavigationHelper navigationHelper;
 
 
   public ApplicationManager(String browser) {
@@ -77,6 +81,25 @@ public class ApplicationManager {
       mailHelper= new MailHelper(this);
     }
     return mailHelper;
+  }
+  public AuthHelper auth(){
+    if (auth==null){
+      auth= new AuthHelper(this);
+    }
+    return auth;
+  }
+  public DBhelper db(){
+    if (dBhelper==null){
+      dBhelper= new DBhelper(this);
+    }
+    return dBhelper;
+  }
+
+  public NavigationHelper goTO(){
+    if (navigationHelper==null){
+      navigationHelper= new NavigationHelper(this);
+    }
+    return navigationHelper;
   }
 
 }
