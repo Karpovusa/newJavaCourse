@@ -36,8 +36,8 @@ public class ApplicationManager {
         String target = System.getProperty("target", "local");
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
         if ("".equals(properties.getProperty("selenium.server"))) {
-            if (browser.equals(BrowserType.CHROME)) {//System.setProperty("webdriver.chrome.driver", "\\\\IdeaProjects\\SKSES tests\\src\\main\\resources\\drivers\\chromedriver.exe");
-                //System.setProperty("webdriver.chrome.driver", "\\Google\\Chrome\\Application\\chrome.exe");
+            if (browser.equals(BrowserType.CHROME)) {//System.setProperty("webdriver.chrome.driver", "/Users/ilakarpov/Documents/Webdriver/chromedriver");
+                //System.setProperty("webdriver.chrome.driver", "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
                 wd = new ChromeDriver();
             } else if (browser.equals(BrowserType.FIREFOX))
                 wd = new FirefoxDriver(new FirefoxOptions().setLegacy(true));
